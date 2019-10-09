@@ -99,20 +99,29 @@ def Import(rootfolder, obj_extension):
 def Place(MyScene):
     myobject=None
     # Check whether there are one or several objects, and unite all
+
     Objects_in_scene = []
-    for object in MyScene.objects:
-        if object.type == "MESH" and object.name != "Decor_Plane":
-            bpy.data.objects[object.name].select_set(True)
-            Objects_in_scene.append(object)
-        if len(Objects_in_scene)>1:
-            bpy.ops.object.join()
 
-    # We need to store our object in a variable to do actions on it.
     for object in MyScene.objects:
-        if object.type == "MESH" and object.name != "Decor_Plane":
-            bpy.data.objects[object.name].select_set(True)
-            myobject=bpy.data.objects[object.name]
+        if object.type == "MESH" and object.name != "RootNode" and object.name != "Decor_Plane":
+            bpy.data.objects[object.name].select_set( True )
+            Objects_in_scene.append( object )
 
+            #Checking whether there's a fucking sketchfab node in there so I can unparent the meshes before joining them
+            if object.parent:
+                matrixcopy = object.matrix_world.copy()
+                object.parent = None
+                object.matrix_world = matrixcopy
+
+    for object in Objects_in_scene:
+        object.select_set( state=True )
+        bpy.context.view_layer.objects.active = object
+
+    bpy.ops.object.join()
+
+    for object in MyScene.objects:
+        if object.type == "MESH" and object.name != "RootNode" and object.name != "Decor_Plane":
+            myobject = bpy.data.objects[object.name]
 
     #Check whether the object is correctly placed
     bpy.ops.object.transform_apply(location= False, rotation= True, scale=True)
