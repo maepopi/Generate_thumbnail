@@ -34,7 +34,7 @@ goto:object_extension_done
 echo object extension is %object_extension%
 
 
-%blenderPath% -P %renderScript% -- %inputPath% %object_extension% %name% %outputPath% %studioPath% %HDRIPath%
- REM no        1         2       3     4           5              6                  7          8           9            
+%blenderPath% -b -P %renderScript% -- %inputPath% %object_extension% %name% %outputPath% %studioPath% %HDRIPath%
+ REM no        1  2       3       4           5              6         7          8           9            10
 
 pause
