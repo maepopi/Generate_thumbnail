@@ -182,7 +182,7 @@ def Clean():
     bpy.data.cameras.values()[0].lens = Setup.default_fov
 
 def ArgTest():
-    print("HEYYYYYYY")
+    print("Arg test")
     print("1 is" + sys.argv[1])
     print("2 is" + sys.argv[2])
     print("3 is" + sys.argv[3])
